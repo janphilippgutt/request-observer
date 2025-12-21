@@ -11,6 +11,8 @@ import (
 
 	"github.com/janphilippgutt/request-observer/internal/httpapi"
 	"github.com/janphilippgutt/request-observer/internal/middleware"
+	"github.com/janphilippgutt/request-observer/internal/observability"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 func main() {
@@ -19,6 +21,12 @@ func main() {
 		middleware.Logging(
 			httpapi.NewRouter(),
 		),
+	)
+
+	// Register metrics
+	prometheus.MustRegister(
+		observability.HTTPRequestsTotal,
+		observability.HTTPRequestDuration,
 	)
 
 	// Create HTTP server

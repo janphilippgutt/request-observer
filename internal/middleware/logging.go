@@ -3,7 +3,10 @@ package middleware
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
+
+	"github.com/janphilippgutt/request-observer/internal/observability"
 )
 
 type statusRecorder struct {
@@ -40,5 +43,17 @@ func Logging(next http.Handler) http.Handler {
 			recorder.statusCode,
 			duration,
 		)
+
+		observability.HTTPRequestsTotal.WithLabelValues(
+			r.Method,
+			r.URL.Path,
+			strconv.Itoa(recorder.statusCode),
+		).Inc()
+
+		observability.HTTPRequestDuration.WithLabelValues(
+			r.Method,
+			r.URL.Path,
+		).Observe(time.Since(start).Seconds())
+
 	})
 }
