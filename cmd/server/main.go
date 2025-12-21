@@ -10,13 +10,19 @@ import (
 	"time"
 
 	"github.com/janphilippgutt/request-observer/internal/httpapi"
+	"github.com/janphilippgutt/request-observer/internal/middleware"
 )
 
 func main() {
+
+	handler := middleware.Logging(
+		httpapi.NewRouter(),
+	)
+
 	// Create HTTP server
 	server := &http.Server{
 		Addr:    ":8080",
-		Handler: httpapi.NewRouter(),
+		Handler: handler,
 	}
 
 	// Start server in a goroutine
