@@ -15,8 +15,10 @@ import (
 
 func main() {
 
-	handler := middleware.Logging(
-		httpapi.NewRouter(),
+	handler := middleware.RequestID(
+		middleware.Logging(
+			httpapi.NewRouter(),
+		),
 	)
 
 	// Create HTTP server

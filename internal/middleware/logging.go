@@ -30,8 +30,11 @@ func Logging(next http.Handler) http.Handler {
 
 		duration := time.Since(start)
 
+		reqID := FromContext(r.Context())
+
 		fmt.Printf(
-			"method=%s path=%s status=%d duration=%s\n",
+			"request_id%s method=%s path=%s status=%d duration=%s\n",
+			reqID,
 			r.Method,
 			r.URL.Path,
 			recorder.statusCode,
