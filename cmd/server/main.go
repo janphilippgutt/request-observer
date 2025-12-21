@@ -8,12 +8,15 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/janphilippgutt/request-observer/internal/httpapi"
 )
 
 func main() {
 	// Create HTTP server
 	server := &http.Server{
-		Addr: ":8080",
+		Addr:    ":8080",
+		Handler: httpapi.NewRouter(),
 	}
 
 	// Start server in a goroutine
