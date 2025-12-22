@@ -10,12 +10,14 @@ import (
 	"time"
 
 	"github.com/janphilippgutt/request-observer/internal/httpapi"
+	"github.com/janphilippgutt/request-observer/internal/logging"
 	"github.com/janphilippgutt/request-observer/internal/middleware"
 	"github.com/janphilippgutt/request-observer/internal/observability"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
 func main() {
+	logging.Init()
 
 	handler := middleware.RequestID(
 		middleware.Logging(

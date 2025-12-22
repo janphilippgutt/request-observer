@@ -1,11 +1,12 @@
 package middleware
 
 import (
-	"fmt"
+	"log/slog"
 	"net/http"
 	"strconv"
 	"time"
 
+	"github.com/janphilippgutt/request-observer/internal/logging"
 	"github.com/janphilippgutt/request-observer/internal/observability"
 )
 
@@ -35,14 +36,25 @@ func Logging(next http.Handler) http.Handler {
 
 		reqID := FromContext(r.Context())
 
-		fmt.Printf(
-			"request_id%s method=%s path=%s status=%d duration=%s\n",
-			reqID,
-			r.Method,
-			r.URL.Path,
-			recorder.statusCode,
-			duration,
-		)
+		if recorder.statusCode >= 500 {
+			logging.Logger.Error(
+				"http request failed",
+				slog.String("request_id", reqID),
+				slog.String("method", r.Method),
+				slog.String("path", r.URL.Path),
+				slog.Int("status", recorder.statusCode),
+				slog.Duration("duration", duration),
+			)
+		} else {
+			logging.Logger.Info(
+				"http request completed",
+				slog.String("request_id", reqID),
+				slog.String("method", r.Method),
+				slog.String("path", r.URL.Path),
+				slog.Int("status", recorder.statusCode),
+				slog.Duration("duration", duration),
+			)
+		}
 
 		observability.HTTPRequestsTotal.WithLabelValues(
 			r.Method,
