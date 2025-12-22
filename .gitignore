@@ -14,4 +14,4 @@
 .DS_Store
 
 # Loki file storage
-loki-wal/*
+docker/loki-wal/*
