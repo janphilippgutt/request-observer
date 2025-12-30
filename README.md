@@ -178,11 +178,9 @@ This choice is intentional:
 
 - net/http is the lowest common denominator in Go backend systems
 
-
-
 - Focus on understanding request lifecycles, middleware chaining, and context propagation
 
-By avoiding frameworks, the project demonstrates how routing, middleware, and handlers really work. Frameworks can be added later — fundamentals cannot.
+By avoiding frameworks, the project demonstrates how routing, middleware, and handlers really work. Frameworks can be added later - fundamentals cannot.
 
 ### Explicit Middleware
 
