@@ -12,3 +12,6 @@
 
 # OS files
 .DS_Store
+
+# Loki file storage
+docker/loki-wal/*

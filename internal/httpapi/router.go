@@ -13,5 +13,8 @@ func NewRouter() http.Handler {
 
 	mux.Handle("/metrics", promhttp.Handler())
 
+	// http.HandlerFunc turns a function into an object that speaks HTTP
+	mux.Handle("/observe", http.HandlerFunc(ObserveHandler))
+
 	return mux
 }
