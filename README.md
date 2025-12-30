@@ -38,8 +38,6 @@ Loki ───► Grafana
 
 ## Key Ideas
 
-Metrics ≠ Logs
-
 Metrics are aggregated → Prometheus
 
 Logs are structured → Loki
@@ -173,7 +171,7 @@ Grafana default credentials `admin / admin`
 
 ## Design Decisions
 
-**No Framework (Gin, Echo, Fiber)**
+### No Framework (Gin, Echo, Fiber)
 
 The service is built directly on Go’s net/http standard library.
 This choice is intentional:
@@ -186,7 +184,7 @@ This choice is intentional:
 
 By avoiding frameworks, the project demonstrates how routing, middleware, and handlers really work. Frameworks can be added later — fundamentals cannot.
 
-**Explicit Middleware**
+### Explicit Middleware
 
 All cross-cutting concerns (logging, metrics, request timing) are implemented as **explicit HTTP middleware.**
 
@@ -207,7 +205,7 @@ This design:
 
 Handlers remain focused on business logic, not infrastructure.
 
-**Lab Design**
+### Lab Design
 
 This is a learning project, therefore the `/observe` endpoint intentionally:
 
@@ -219,7 +217,7 @@ This is a learning project, therefore the `/observe` endpoint intentionally:
 
 This ensures that dashboards, alerts, and logs demonstrate real behavior, not idealized examples.
 
-**Observability Before Optimization**
+### Observability Before Optimization
 
 The service is instrumented from the beginning, even though it is small.
 
